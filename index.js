@@ -20,16 +20,18 @@ const exampleEmbed = new Discord.RichEmbed()
 
 client.on("message", (message) => {
   const cmd = message.content;
+  const msg = message.channel.send;
   if (cmd == 'embed') {
-    message.channel.send(exampleEmbed);
+    msg(exampleEmbed);
     console.log(message.author.username + " has sucessfully ran the embed command!");
   }
   if (cmd == 'braden') {
-    message.channel.send('Braden Mateus Won Prom Court 6 Times!');
+    msg('Braden Mateus Won Prom Court 6 Times!');
   }
   if (message.content.includes("nigga")) {
-    message.channel.send('Homie really :(');
+    msg('Homie really :(');
   }
 });
- 
+
+// This token is safely stored on my pc :) 
 client.login(config.token);
