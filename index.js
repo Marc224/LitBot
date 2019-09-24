@@ -1,36 +1,51 @@
 const Discord = require("discord.js");
 const config = require("./config.json");
+const prefix = "!";
 const client = new Discord.Client();
  
-const exampleEmbed = new Discord.RichEmbed()
-	.setColor('#0099ff')
-	.setTitle('Some title')
-	.setURL('https://discord.js.org/')
-	.setAuthor('Some name', 'https://i.imgur.com/wSTFkRM.png', 'https://discord.js.org')
-	.setDescription('Some description here')
-	.setThumbnail('https://i.imgur.com/wSTFkRM.png')
-	.addField('Regular field title', 'Some value here')
-	.addBlankField()
-	.addField('Inline field title', 'Some value here', true)
-	.addField('Inline field title', 'Some value here', true)
-	.addField('Inline field title', 'Some value here', true)
-	.setImage('https://i.imgur.com/wSTFkRM.png')
-	.setTimestamp()
-	.setFooter('Some footer text here', 'https://i.imgur.com/wSTFkRM.png');
+client.on("ready", () => {
+	console.log(`Hi, ${client.user.username} is now online!`);
+	
+		client.user.setPresence({
+			status: "online",
+			game: {
+				name: "me getting developed",
+				type: "STREAMING"
+			}
+		}); 
+	})
 
-client.on("message", (message) => {
-  const cmd = message.content;
-  const msg = message.channel.send;
-  if (cmd == 'embed') {
-    msg(exampleEmbed);
-    console.log(message.author.username + " has sucessfully ran the embed command!");
-  }
-  if (cmd == 'braden') {
-    msg('Braden Mateus Won Prom Court 6 Times!');
-  }
-  if (message.content.includes("nigga")) {
-    msg('Homie really :(');
-  }
+client.on("message", (message) => {  
+  
+  	let messageArray = message.content.split(/\s+/g);
+  	let info = messageArray.slice(1).join(' ');
+
+  	const args = message.content.slice(prefix.length).trim().split(/ +/g);
+	const cmd = args.shift().toLowerCase();
+
+	if (!message.content.startsWith(prefix)) return;
+ 
+  	if (message.content.startsWith(prefix +'embed')) {
+    	message.channel.send(exampleEmbed);
+    	console.log(message.author.username + " has sucessfully ran the embed command!");
+  	}
+ 
+  	if (message.content.startsWith(prefix +'braden')) {
+    	message.channel.send("Braden Mateus Won Prom Court 6 Times!");
+  	}
+ 
+ 	 if (message.content.includes("nigga")) {
+    	message.channel.send("Homie really :(");
+  	}
+ 
+  	if (message.content.startsWith(prefix +'announce')) {
+		if (cmd.length = 0) {
+			message.channel.send("You need a message in order to announce smh.");
+		} else {
+			// Will add code later to this
+			return;
+		}
+  	}
 });
 
 // This token is safely stored on my pc :) 
