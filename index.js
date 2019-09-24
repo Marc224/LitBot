@@ -19,6 +19,7 @@ client.on("message", (message) => {
 	const command = args.shift().toLowerCase();
 	const cmd = message.content;
 	const user = message.mentions.users.first();
+	const random = message.guild.members.random();
 
 	if (!cmd.startsWith(prefix)) return;
  
@@ -39,7 +40,15 @@ client.on("message", (message) => {
   	if (message.content.startsWith(prefix +'announce')) {
 		message.delete();
 		let argsresult = args.join(" ");
-		message.channel.send(argsresult);
+		if(args <= 0) {
+			message.reply("incorrect usage. Please do " + prefix + "announce <message to be sent>");
+		} else {
+			message.channel.send(argsresult);
+		}
+	}
+	if(cmd.startsWith(prefix + 'snitch')) {
+		message.channel.send(random + " is part of the 9 trey bloods");
+		message.channel.send(random.user.avatarURL);
 	}
 });
 
