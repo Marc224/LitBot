@@ -17,15 +17,9 @@ const exampleEmbed = new Discord.RichEmbed()
 	.setTimestamp()
 	.setFooter('Some footer text here', 'https://i.imgur.com/wSTFkRM.png');
 
-channel.send(exampleEmbed);
-
-client.on("ready", () => {
-  console.log("I am ready!");
-});
- 
 client.on("message", (message) => {
-  if (message.content.startsWith("ping")) {
-    message.channel.send("pong!");
+  if (message.content.startsWith("embed")) {
+    message.channel.send(exampleEmbed.color('#ff2b36'));
   }
 });
  
