@@ -25,7 +25,7 @@ client.on("message", (message) => {
  
   	if (cmd.startsWith(prefix +'embed')) {
     	message.channel.send(exampleEmbed);
-    	console.log(message.author.username + " has sucessfully ran the embed command!");
+    	console.log(message.author.username + " has successfully ran the embed command!");
   	}
  
   	if (cmd.startsWith(prefix +'braden')) {
@@ -48,7 +48,10 @@ client.on("message", (message) => {
 	}
 	if(cmd.startsWith(prefix + 'snitch')) {
 		message.channel.send(random + " is part of the 9 trey bloods");
-		message.channel.send(random.user.avatarURL);
+		const avatarEmbed = new Discord.RichEmbed()
+        .setColor(0x333333)
+        .setImage(random.user.avatarURL);
+		message.channel.send(avatarEmbed);
 	}
 });
 
