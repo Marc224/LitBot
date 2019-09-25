@@ -9,7 +9,7 @@ client.on("ready", () => {
 		client.user.setPresence({
 			status: "online",
 			game: {
-				name: "me getting developed",
+				name: "with my filthy pussy",
 				type: "STREAMING"
 			}
 	}	); 
@@ -21,38 +21,40 @@ client.on("message", (message) => {
 	const user = message.mentions.users.first();
 	const random = message.guild.members.random();
 
-	if (!cmd.startsWith(prefix)) return;
- 
-  	if (cmd.startsWith(prefix +'embed')) {
-    	message.channel.send(exampleEmbed);
-    	console.log(message.author.username + " has successfully ran the embed command!");
-  	}
- 
-  	if (cmd.startsWith(prefix +'braden')) {
-    	message.channel.send("Braden Mateus Won Prom Court 6 Times!");
-  	}
- 
- 	if (cmd.includes("nigga")) {
+	if (message.content.includes("nigga")) {
 		message.delete();
-    	message.reply(" said the N Word, go bully them!");
-  	}
+		message.reply(" said the N Word, go bully them!");
+	}
+	if (cmd.startsWith(prefix)) {
+	    if (cmd.startsWith(prefix +'embed')) {
+    	    message.channel.send(exampleEmbed);
+    	    console.log(message.author.username + " has successfully ran the embed command!");
+	    }
  
-  	if (message.content.startsWith(prefix +'announce')) {
-		message.delete();
-		let argsresult = args.join(" ");
-		if(args <= 0) {
-			message.reply("incorrect usage. Please do " + prefix + "announce <message to be sent>");
-		} else {
-			message.channel.send(argsresult);
+  	    if (cmd.startsWith(prefix +'braden')) {
+    	    message.channel.send("Braden Mateus Braden Mateus Braden Mateus Braden Mateus Braden Mateus Braden Mateus Braden Mateus Braden Mateus Braden Mateus Braden Mateus Braden Mateus Braden Mateus ");
+  	    }
+ 
+  	    if (message.content.startsWith(prefix +'announce')) {
+		    message.delete();
+		    let argsresult = args.join(" ");
+		    if(args <= 0) {
+			    message.reply("incorrect usage. Please do " + prefix + "announce <message to be sent>");
+		    } else {
+				message.channel.send(argsresult);
+			}
 		}
+	    if(cmd.startsWith(prefix + 'snitch')) {
+		    message.channel.send(random + " is part of the 9 trey bloods");
+		    const avatarEmbed = new Discord.RichEmbed()
+            .setColor(0x333333)
+            .setImage(random.user.avatarURL);
+		    message.channel.send(avatarEmbed);
+	    } else {
+		return;
 	}
-	if(cmd.startsWith(prefix + 'snitch')) {
-		message.channel.send(random + " is part of the 9 trey bloods");
-		const avatarEmbed = new Discord.RichEmbed()
-        .setColor(0x333333)
-        .setImage(random.user.avatarURL);
-		message.channel.send(avatarEmbed);
-	}
+}
+	
 });
 
 // This token is safely stored on my pc :) 
