@@ -1,61 +1,58 @@
-const Discord = require("discord.js");
+const { Client, Collection } = require("discord.js");
 const config = require("./config.json");
-const prefix = "!";
-const client = new Discord.Client();
- 
+
+const client = new Client({
+    disableEveryone: true
+})
+
+// Collections
+client.commands = new Collection();
+client.aliases = new Collection();
+
+// Run the command loader
+["command"].forEach(handler => {
+    require(`./handler/${handler}`)(client);
+});
+
 client.on("ready", () => {
-	console.log(`Hi, ${client.user.username} is now online!`);
-	
-		client.user.setPresence({
-			status: "online",
-			game: {
-				name: "with my filthy pussy",
-				type: "STREAMING"
-			}
-	}	); 
-});
-client.on("message", (message) => {  
-	const args = message.content.slice(prefix.length).trim().split(/ +/g);
-	const command = args.shift().toLowerCase();
-	const cmd = message.content;
-	const user = message.mentions.users.first();
-	const random = message.guild.members.random();
+    console.log(`Hi, ${client.user.username} is now online!`);
 
-	if (message.content.includes("nigga")) {
+    client.user.setPresence({
+        status: "online",
+        game: {
+            name: "you",
+            type: "WATCHING"
+        }
+    }); 
+})
+
+client.on("message", async message => {
+	const prefix = config.prefix;
+
+	if(message.content == ("nigga")) {
 		message.delete();
-		message.reply(" said the N Word, go bully them!");
+		message.reply("smh he said a NO NO word.");
 	}
-	if (cmd.startsWith(prefix)) {
-	    if (cmd.startsWith(prefix +'embed')) {
-    	    message.channel.send(exampleEmbed);
-    	    console.log(message.author.username + " has successfully ran the embed command!");
-	    }
- 
-  	    if (cmd.startsWith(prefix +'braden')) {
-    	    message.channel.send("Braden Mateus Braden Mateus Braden Mateus Braden Mateus Braden Mateus Braden Mateus Braden Mateus Braden Mateus Braden Mateus Braden Mateus Braden Mateus Braden Mateus ");
-  	    }
- 
-  	    if (message.content.startsWith(prefix +'announce')) {
-		    message.delete();
-		    let argsresult = args.join(" ");
-		    if(args <= 0) {
-			    message.reply("incorrect usage. Please do " + prefix + "announce <message to be sent>");
-		    } else {
-				message.channel.send(argsresult);
-			}
-		}
-	    if(cmd.startsWith(prefix + 'snitch')) {
-		    message.channel.send(random + " is part of the 9 trey bloods");
-		    const avatarEmbed = new Discord.RichEmbed()
-            .setColor(0x333333)
-            .setImage(random.user.avatarURL);
-		    message.channel.send(avatarEmbed);
-	    } else {
-		return;
-	}
-}
-	
+
+    if (message.author.bot) return;
+    if (!message.guild) return;
+
+    // If message.member is uncached, cache it.
+    if (!message.member) message.member = await message.guild.fetchMember(message);
+
+    const args = message.content.slice(prefix.length).trim().split(/ +/g);
+    const cmd = args.shift().toLowerCase();
+    
+    if (cmd.length === 0) return;
+    
+    // Get the command
+    let command = client.commands.get(cmd);
+    // If none is found, try to find it by alias
+    if (!command) command = client.commands.get(client.aliases.get(cmd));
+
+    // If a command is finally found, run the command
+    if (command) 
+        command.run(client, message, args);
 });
 
-// This token is safely stored on my pc :) 
 client.login(config.token);
