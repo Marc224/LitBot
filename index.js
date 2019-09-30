@@ -1,13 +1,11 @@
-const { Client, Collection } = require("discord.js");
+const Discord = require("discord.js");
 const config = require("./config.json");
 
-const client = new Client({
-    disableEveryone: true
-})
+const client = new Discord.Client({disableEveryone: true});
 
 // Collections
-client.commands = new Collection();
-client.aliases = new Collection();
+client.commands = new Discord.Collection();
+client.aliases = new Discord.Collection();
 
 // Run the command loader
 ["command"].forEach(handler => {
@@ -18,20 +16,20 @@ client.on("ready", () => {
     console.log(`Hi, ${client.user.username} is now online!`);
 
     client.user.setPresence({
-        status: "online",
-        game: {
-            name: "you",
-            type: "WATCHING"
+        "status": "online",
+        "game": {
+            "name": "you",
+            "type": "WATCHING"
         }
-    }); 
-})
+    });
+});
 
 client.on("message", async message => {
 	const prefix = config.prefix;
 
-	if(message.content == ("nigga")) {
-		message.delete();
-		message.reply("smh he said a NO NO word.");
+	if(message.content === ("nigga")) {
+		await message.delete();
+		await message.reply("smh he said a NO NO word.");
 	}
 
     if (message.author.bot) return;
@@ -51,8 +49,9 @@ client.on("message", async message => {
     if (!command) command = client.commands.get(client.aliases.get(cmd));
 
     // If a command is finally found, run the command
-    if (command) 
+    if (command) {
         command.run(client, message, args);
+    }
 });
 
 client.login(config.token);

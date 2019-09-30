@@ -23,13 +23,12 @@ module.exports = (client) => {
                 table.addRow(file, '✅');
             } else {
                 table.addRow(file, `❌  -> missing a help.name, or help.name is not a string.`);
-                continue;
             }
         }
     });
     // Log the table
     console.log(table.toString());
-}
+};
 
 /**
  * This is the basic command layout
